@@ -1,0 +1,554 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8">
+  <title>仮設計画モデリング</title>
+  <meta name="description" content="BIMCIM足場のごあんない">
+  <meta name="keywords" content="BIMCIM,NDシステム,仮設計画,NikkenCONNECT,日建コネクト,数量,施工管理">
+  <link rel="stylesheet" href="aaa" />
+  <link href="css/reset.css" rel="stylesheet" type="text/css">
+  <link href="css/modeling.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <link rel="icon" href="image/NikkenMark.ico" type="image/x-icon">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <style>
+    .bx-container {
+      box-shadow: none;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header_inner">
+      <div class="logo"><a href="index.html"><img src="image/bimcim_logo.png" /></a></div>
+      <h1 class="title"><img src="image/title.png" alt="" /></h1>
+      <div class="company"><a href="https://www.nrg.co.jp/nikkenlease/"><img src="image/company_logo.png" alt="" /></a>
+      </div>
+      <div><a href="#" id="h-menu"><i class="fa fa-bars"></i></a></div>
+    </div>
+    <nav class="g-nav">
+      <ul class="menu">
+        <li class="menu_list"><a href="index.html" class="menu_link">ホーム</a></li>
+        <li class="menu_list"><a href="index.html#jump_info" class="menu_link">おしらせ</a></li>
+        <li class="menu_list"><a href="index.html#jump_bim" class="menu_link">施工BIMCIM</a>
+          <ul class="menu-children">
+            <li class="menu-child"><a href="index.html#summary_copy">当社のBIMCIMとは？</a></li>
+            <li class="menu-child"><a href="index.html#modeling">仮設計画モデリング</a></li>
+            <li class="menu-child"><a href="index.html#nc">NikkenCONNECT</a></li>
+            <li class="menu-child"><a href="index.html#nd">Nikkenダイレクト</a></li>
+          </ul>
+        </li>
+        <li class="menu_list"><a href="index.html#jump_product" class="menu_link">製品</a>
+          <ul class="menu-children">
+            <li class="menu-child"><a href="index.html#construction">仮設～る</a></li>
+            <li class="menu-child"><a href="index.html#scp">smartCONPlanner</a></li>
+            <li class="menu-child"><a href="index.html#training">Training</a></li>
+            <!--<li class="menu-child"><a href="#BIM_Parts">BIMCIMパーツ提供</a></li>-->
+            <li class="menu-child"><a href="index.html#other">その他XR活用</a></li>
+          </ul>
+        </li>
+        <li class="menu_list"><a href="index.html#jump_mail" class="menu_link">お問い合わせ</a>
+          <!--<ul class="menu-children">
+          <li class="menu-child"><a href="#jump_mail">お問い合わせフォーム</a></li>
+        </ul>-->
+        </li>
+        <!-- <li class="menu_list" id="members_list"><a href="#" class="menu_link">会員サイト</a>
+        <ul class="menu-children" id="members-children">
+          <li class="menu-child"><a href="#">NikkenCONNECT</a></li>
+          <li class="menu-child"><a href="#">仮設～る</a></li>
+        </ul>
+      </li>-->
+      </ul>
+    </nav>
+  </header>
+  <div class="modeling_box">
+    <div class="title_wrapper">
+      <div class="vertical_lines"></div>
+      <h1 class="page_title">仮設計画モデリング</h1>
+      <!--<img src="connect_image/connect_logo.png" alt=""/>-->
+    </div>
+  </div>
+  <!-- wp:image → riskpoint.png を sample.html に置き換え -->
+  <figure class="figure">
+    <div class="iframe-wrapper">
+      <!-- Static image shown during scroll for smooth performance -->
+      <div class="scroll-placeholder" id="scrollPlaceholder">
+        <img src="image/preview.png" alt="3Dモデルプレビュー" />
+      </div>
+      <iframe src="sample.html" title="サンプルIFCモデル"></iframe>
+    </div>
+  </figure>
+
+  <style>
+    .figure {
+      width: 100%;
+      max-width: 100%;
+      margin: 100 100;
+    }
+
+    .iframe-wrapper {
+      position: relative;
+      max-width: 1280px;
+      margin-top: 50px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 40%;
+      /* 16:9 aspect ratio */
+      height: 100px;
+      overflow: hidden;
+      /* Performance optimizations - Remove will-change during normal state */
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      contain: layout style paint;
+      /* CSS containment for better performance */
+    }
+
+    .iframe-wrapper iframe {
+      position: absolute;
+      top: 100;
+      left: 100;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      /* Performance optimizations */
+      transform: translate3d(0, 0, 0);
+      /* Force GPU acceleration */
+      -webkit-transform: translate3d(0, 0, 0);
+      content-visibility: auto;
+      /* Modern performance optimization */
+    }
+
+    /* Scroll placeholder - static image during scroll */
+    .scroll-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f5f5f5;
+      display: none;
+      /* Hidden by default */
+      z-index: 10;
+      /* Above iframe */
+      pointer-events: none;
+    }
+
+    .scroll-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+
+    .placeholder-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    /* Show placeholder during scroll */
+    .scroll-placeholder.active {
+      display: block;
+    }
+
+    /* Smooth scrolling optimization */
+    * {
+      -webkit-overflow-scrolling: touch;
+      /* iOS smooth scroll */
+    }
+
+    html {
+      scroll-behavior: auto;
+      /* Disable smooth scroll for better performance */
+    }
+  </style>
+
+  <div class="model-instructions">
+  <strong>操作方法：</strong>　マウスドラッグ：回転　マウスホイール：拡大/縮小　Ctrlキー＋マウスドラッグ：位置変更
+</div>
+    
+  <div class="item_inner">
+    <div class="main_img"><!--<img src="connect_image/nc_heading.png" alt=""/>--></div>
+    <ul class="model">
+      <li class="summary1">
+        <p>日建リース工業では、仮設材のBIMモデルを活用し、視覚的にわかりやすい仮設計画をご提案します。</p>
+        <p>施工前に3Dモデルで計画内容を確認頂くことで、安全性や作業効率の向上に繋がります。</p>
+        <p>仮設の専門知識を基に、実際の現場に即した、実用性の高いモデリングを心がけています。</p>
+      </li>
+    </ul>
+
+    <div class="copy-wrapper">
+      <div class="copy-line"></div>
+      <div class="copy-text">
+        <h2 class="copy-title">数量抽出</h2>
+      </div>
+      <div class="copy-line_2"></div>
+    </div>
+    <p class="modeling_text">
+      従来は紙の図面で情報共有しており、設計変更時の修正配布に手間がかかっていました。日建リース工業のBIMCIMソリューションでは3Dモデルに<br>
+      よる一元管理で最新情報をリアルタイムに共有可能。変更点の可視化や施工前の課題把握が容易になり、現場対応や工程調整を減らせます。<br>
+      工程情報と組み合わせることで進捗管理や施工計画の精度も向上。また、部材単位での数量算出も柔軟に行えます。</p>
+
+    <div id="count-slider">
+      <div class="slider-wrapper">
+        <button id="prev-btn" class="slider-btn prev-btn">&#10094;</button>
+          
+        <div class="slider-images">
+      <div class="slide active">
+        <img src="image/slide1.png" alt="スライド1">
+        <p class="slide-text">仮設足場を3Dモデルで可視化し、施工前に安全性を確認します。</p>
+      </div>
+      <div class="slide">
+        <img src="image/slide2.png" alt="スライド2">
+        <p class="slide-text">BIMデータを活用し、施工ステップをわかりやすく共有できます。</p>
+      </div>
+      <div class="slide">
+        <img src="image/slide3.png" alt="スライド3">
+        <p class="slide-text">現場状況に合わせた仮設計画をシミュレーションできます。</p>
+      </div>
+      <div class="slide">
+        <img src="image/slide4.png" alt="スライド4">
+        <p class="slide-text">部材単位で数量算出し、発注作業を効率化します。</p>
+      </div>
+    </div>
+        <button id="next-btn" class="slider-btn next-btn">&#10095;</button>
+      </div>
+    </div>
+    <div class="copy-wrapper">
+      <div class="copy-line"></div>
+      <div class="copy-text">
+        <h2 class="copy-title">基本フロー</h2>
+      </div>
+      <div class="copy-line_2"></div>
+    </div>
+    <p class="modeling_text">
+      ご依頼からモデル納品までの流れをご紹介します。<br>
+      ご要望を丁寧にヒアリングし、点群データや躯体モデルを基に高精度な仮設計画モデルを作成します。<br>
+      複数回の調整会議を経て、最終的な工区設定・数量算出まで対応。
+      現場で活用しやすい実用的なモデルをご提供いたします。</p>
+
+      <div class="main_img"><img src="image/flow.png" alt="" /></div>
+     
+      <div class="other">
+        <div class="copy-wrapper">
+          <div class="copy-line"></div>
+          <div class="copy-text">
+            <h2 class="copy-title">点群活用</h2>
+          </div>
+          <div class="copy-line_2"></div>
+        </div>
+        <ul class="model">
+          <li class="item_copy_BIM_addiction">
+              <img src="image/pointcloudstep1.png" alt="" />
+            　<img class="arrow" src="image/arrow.png" alt="矢印"/>
+            </li>
+          <li class="item_copy_BIM_addiction"> 　
+            <p class="essential_h">●点群取得</p>
+            <p>・レーザースキャナーやドローンで現場をスキャン</p>
+            <p>・必要に応じて複数位置から撮影し、オーバーラップを確保</p>
+            <p>※撮影環境(照明、天候、通行人や車両、立入禁止区域)などの<br> 状況により撮影が延期したり不可能な場合があります。</p>
+          </li>
+        </ul>
+        <ul class="model">
+          <li class="item_copy_BIM_addiction">
+              <img src="image/pointcloud step2.jpg" alt="" />
+              <img class="arrow" src="image/arrow.png" alt="矢印"/>
+            </li>
+          <li class="item_copy_BIM_addiction"> 　
+            <p class="essential_h">●データ処理</p>
+            <p>・複数のスキャンを基準点や特徴点で統合して、一つの点群にする</p>
+            <p>・人や車、不要物などのノイズ除去や座標系調整</p>
+            <p>・間引き・圧縮 : データ量が大きいので最適化</p>
+          </li>
+        </ul>
+        <ul class="model">
+          <li class="item_copy_BIM_addiction">
+              <img src="image/pointcloud step3.png" alt="" />
+              <img class="arrow" src="image/arrow.png" alt="矢印"/>
+            </li>
+          <li class="item_copy_BIM_addiction"> 　
+            <p class="essential_h">●リバースモデリング</p>
+            <p>・点群データはそのままでは「ただの点の集まり」に過ぎない</p>
+            <p>・データ容量が大きく、扱いにくい</p>
+            <p>・そのため、用途に応じてメッシュやソリッドなどにモデル化します。</p>
+          </li>
+        </ul>
+        <ul class="model">
+          <li class="item_copy_BIM_addiction"><img src="image/pointcloudstep4.png" alt="" />
+            </li>
+          <li class="item_copy_BIM_addiction">
+            <p class="essential_h">●仮設BIMモデル作成</p>
+            <p>・3Dモデルをもとに、仮設計画用のBIMモデルを構築します。</p>
+            <p>・施工ステップや安全計画を可視化し、現場での合意形成をスムーズにします。</p>
+            <p>・効率的で確実な施工計画をサポートします。</p>
+          </li>
+        </ul>
+      </div>
+      <div class="question">
+        <div class="copy-wrapper">
+          <div class="copy-line"></div>
+          <div class="copy-text">
+            <h2 class="copy-title"> Q&amp;A</h2>
+          </div>
+          <div class="copy-line_2"></div>
+        </div>
+        <ul class="question_A">
+          <li class="Q">Q. モデルの変更が必要になった場合、費用は発生しますか？</li>
+          <br>
+          <li class="A">A. 基本的に軽微な修正は初期費用に含まれております。<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;大きな変更や追加作業が発生しない限り、追加料金はかかりません。</li>
+        </ul>
+        <ul class="question_A">
+          <li class="Q">Q. 御社のパーツ以外のパーツもモデリングしてもらえますか？</li>
+          <br>
+          <li class="A">A. ご要望に応じて対応可能です。<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;内容をご確認のうえ、別途ご相談させていただきます。</li>
+        </ul>
+        <ul class="question_A">
+          <li class="Q">Q. 躯体モデルしか持っていません。街路樹や電線などの周辺環境も依頼できますか？</li>
+          <br>
+          <li class="A">A. はい、対応可能です。<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;点群撮影を行い、そのデータをもとに周辺環境をモデリングいたします。</li>
+        </ul>
+        <ul class="question_mobile">
+          <li class="Q">Q. モデルの変更が必要になった場合<br>&emsp;&nbsp;費用は発生しますか？</li>
+          <br>
+          <li class="A">A. 基本的に軽微な修正は<br>&emsp;&nbsp;初期費用に含まれております。<br>&emsp;&nbsp;大きな変更や追加作業が発生しない限り<br>&emsp;&nbsp;追加料金はかかりません。</li>
+        </ul>
+        <ul class="question_mobile">
+          <li class="Q">Q. 御社のパーツ以外のパーツも<br>&emsp;&nbsp;モデリングしてもらえますか？</li>
+          <br>
+          <li class="A">A.
+            ご要望に応じて対応可能です。<br>&emsp;&nbsp;内容をご確認のうえ<br>&emsp;&nbsp;別途ご相談させていただきます。
+          </li>
+        </ul>
+        <ul class="question_mobile">
+          <li class="Q">Q. 躯体モデルしか持っていません。<br>&emsp;&nbsp;街路樹や電線などの周辺環境も依頼できますか？</li>
+          <br>
+          <li class="A">A.
+           はい、対応可能です。<br>&emsp;&nbsp;点群撮影を行い、そのデータをもとに<br>&emsp;&nbsp;周辺環境をモデリングいたします。</li>
+        </ul>
+      </div>
+    </div>
+    <a href="#" class="back-to-top" id="backToTop">&#8679;</a>
+    <footer>
+      <ul class="sitemap">
+        <!--/*fotter_privacyを削除*/-->
+        <li class="footer_menu"><a href="index.html"><strong>ホーム</strong></a></li>
+        <!-- <li class="footer_menu"><strong>おしらせ</strong></li>-->
+        <li class="footer_menu"><a href="index.html#jump_mail"><strong>お問い合わせ</strong></a></li>
+        <li class="footer_menu"><a href="privacy policy/policy.html"><strong>プライバシーポリシー</strong></a></li>
+        <li class="footer_menu"><strong>施工BIMCIM</strong>
+          <ul class="footer-children">
+            <li class="footer-child"><a href="#modeling">仮設計画モデリング【工事中】</a></li>
+            <li class="footer-child"><a href="nikkenconnect.html">NikkenCONNECT</a></li>
+            <!--<li class="footer-child"><a href="#nd">Nikkenダイレクト</a></li>-->
+          </ul>
+        </li>
+        <!-- <li class="footer_menu"><strong>製品</strong>
+      <ul class="footer-children">
+        <li class="footer-child"><a href="#construction">仮設～る</a></li>
+        <li class="footer-child"><a href="#scp">smartCONPlanner</a></li>
+        <li class="footer-child"><a href="#training">Training</a></li>
+        <li class="footer-child"><a href="#training">BIMパーツ提供</a></li>
+      </ul>
+    </li>
+    <li class="footer_menu"><strong>会員専用ページ(ログイン)</strong>
+      <ul class="footer-children">
+        <li class="footer-child"><a href="#modeling">NikkenCONNECT【会員限定】</a></li>
+        <li class="footer-child"><a href="#nc">仮設～る【会員限定】</a></li>
+        <li class="footer-child">上記のページにはログインが必要です。</li>
+      </ul>
+    </li>-->
+      </ul>
+      <nav class="footer_copy"><a>Copyright © Nikken Lease Kogyo All Rights Reserved.</a></nav>
+    </footer>
+    <script>
+      /*レスポンシブ*/
+      jQuery(function ($) {
+        var menu = $('nav ul');
+
+        // ハンバーガーメニュー開閉
+        $('#h-menu').on('click', function (e) {
+          e.preventDefault();
+          menu.slideToggle(function () {
+            if ($(this).is(':visible')) {
+              $('.menu-children').slideUp(); // サブメニューを全部閉じる
+              $('.menu_list').removeClass('active'); // activeクラスも削除
+            }
+          });
+        });
+
+        // サブメニュー開閉（スマホ）
+        $('.menu_list').has('.menu-children').children('a').on('click', function (e) {
+          const parentLi = $(this).parent();
+          const submenu = parentLi.find('.menu-children');
+
+          if (submenu.length) {
+            e.preventDefault(); // 通常のリンク動作を防ぐ
+            // サブメニューが開いている場合は閉じる、閉じている場合は開く
+            if (submenu.is(':visible')) {
+              submenu.stop().slideUp(); // 開いているサブメニューを閉じる
+              parentLi.removeClass('active');
+            } else {
+              submenu.stop().slideDown(); // サブメニューを開く
+              parentLi.addClass('active');
+            }
+
+            // 他のサブメニューを閉じる（他の親メニューのactiveクラスも削除）
+            $('.menu-children').not(submenu).slideUp();
+            $('.menu_list').not(parentLi).removeClass('active');
+          }
+        });
+
+        // メニュー内リンククリックで閉じる（サブメニュー除く）
+        $('.menu a').on('click', function (e) {
+          if ($(this).is('#h-menu')) return; // ハンバーガーアイコンは除外
+
+          const parentLi = $(this).parent();
+          const hasSubmenu = parentLi.children('.menu-children').length > 0;
+
+          // サブメニューを持つリンクなら閉じ処理はスキップ
+          if (hasSubmenu) {
+            e.preventDefault();
+            return;
+          }
+
+          // 通常のリンクならメニューを閉じる
+          if (window.innerWidth <= 1024) {
+            menu.slideUp();
+            $('.menu-children').slideUp();
+            $('.menu_list').removeClass('active');
+          }
+        });
+
+        // リサイズ時にメニュー状態をリセット（PC表示用）
+        let timer = false;
+        $(window).resize(function () {
+          if (timer !== false) clearTimeout(timer);
+          timer = setTimeout(function () {
+            const w = $(window).width();
+            if (w > 1024) {
+              // メニュー状態をリセット
+              menu.removeAttr('style');
+              $('.menu-children').removeAttr('style').hide(); // ← .slideUp() → .hide() にするとアニメーション無しで即閉じ
+              $('.menu_list').removeClass('active');
+            }
+          }, 200);
+        });
+      });
+    </script>
+    <script>
+      /*上部ボタン*/
+      const backToTop = document.getElementById('backToTop');
+
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTop.classList.add('show');
+        } else {
+          backToTop.classList.remove('show');
+        }
+      });
+
+      backToTop.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    </script>
+    <script>
+      /* ULTRA FAST SCROLL: Show static image during scroll */
+      (function () {
+        let scrollTimeout;
+        let isScrolling = false;
+        let iframe = null;
+        let placeholder = null;
+        let iframeReady = false;
+
+        // Wait for iframe to load before caching elements
+        window.addEventListener('load', function () {
+          iframe = document.querySelector('.iframe-wrapper iframe');
+          placeholder = document.getElementById('scrollPlaceholder');
+          iframeReady = !!(iframe && placeholder);
+        });
+
+        window.addEventListener('scroll', function () {
+          if (!iframeReady) return; // Skip if not loaded yet
+
+          if (!isScrolling) {
+            isScrolling = true;
+            // SHOW placeholder and HIDE iframe during scroll
+            placeholder.classList.add('active');
+            iframe.style.visibility = 'hidden';
+            iframe.style.pointerEvents = 'none';
+
+            // Send scroll message asynchronously
+            try {
+              iframe.contentWindow.postMessage('scrolling', '*');
+            } catch (e) { }
+          }
+
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(function () {
+            isScrolling = false;
+            // HIDE placeholder and SHOW iframe after scroll ends
+            placeholder.classList.remove('active');
+            iframe.style.visibility = 'visible';
+            iframe.style.pointerEvents = 'auto';
+          }, 80); // Fast response
+        }, { passive: true });
+      })();
+    </script>
+  <script>
+(function() {
+  const slides = document.querySelectorAll('.slider-images .slide');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  let current = 0;
+
+  function showSlide(index) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    slides[index].classList.add('active');
+  }
+
+  prevBtn.addEventListener('click', () => {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  });
+
+  // 自動切り替え（任意）
+  // setInterval(() => {
+  //   current = (current + 1) % slides.length;
+  //   showSlide(current);
+  // }, 5000);
+
+  showSlide(current);
+})();
+</script>
+</body>
+
+</html>
